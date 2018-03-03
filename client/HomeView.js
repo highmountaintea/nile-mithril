@@ -8,11 +8,31 @@ const HomeView = {
             m(TopNavView),
             m('main', { role: 'main', class: 'container' },
                 m('div', { class: 'row' },
-                    m('div', { class: 'col-md-4' },
+                    m('div', { class: 'col-md-3' },
                         m(LeftNavView)
                     ),
-                    m('div', { class: 'col-md-8' },
-                        m('h1', 'Dummy Cart')
+                    m('div', { class: 'col-md-9' },
+                        m('h1', 'Hot Items'),
+                        m('div', { class: 'row' },
+                            m('div', { class: 'col-md-auto' },
+                                m('img', { src: 'book-clip-art-20.jpg' })
+                            ),
+                            m('div', { class: 'col' },
+                                m('h3', { class: 'row' }, 'Programming This and That'),
+                                m('div', { class: 'row' }, 'Albert Einstein'),
+                                m('div', { class: 'row' }, '$12.00'),
+                            )
+                        ),
+                        m('div', { class: 'row' },
+                            m('div', { class: 'col-md-auto' },
+                                m('img', { src: 'book-clip-art-20.jpg' })
+                            ),
+                            m('div', { class: 'col' },
+                                m('h3', { class: 'row' }, 'Programming This and That'),
+                                m('div', { class: 'row' }, 'Albert Einstein'),
+                                m('div', { class: 'row' }, '$12.00'),
+                            )
+                        )
                     ),
                 ),
             ),
