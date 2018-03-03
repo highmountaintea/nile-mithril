@@ -1,4 +1,6 @@
 const m = require('mithril');
-const MainView = require('./MainView');
+const HomeView = require('./HomeView');
 
-m.mount(document.body, { view: MainView });
+m.route(document.body, "/home", {
+    "/home": HomeView,
+});
