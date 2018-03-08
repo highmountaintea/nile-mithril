@@ -19,7 +19,7 @@ if (babel) rules.push({
 
 module.exports = {
   entry: {
-    app: ["./client/index.js"],
+    app: ['babel-polyfill', "./client/index.js"],
   },
   output: {
     filename: "static/app.js",
