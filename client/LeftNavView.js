@@ -1,7 +1,9 @@
 const m = require('mithril');
 
 function drawCategory(category) {
-    return m('li', category);
+    return m('li',
+        m('a', { href: '/category/' + category, oncreate: m.route.link }, category)
+    );
 }
 
 const LeftNavView = {
