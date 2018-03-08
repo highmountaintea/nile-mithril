@@ -2,7 +2,30 @@ const m = require('mithril');
 const TopNavView = require('./TopNavView');
 const LeftNavView = require('./LeftNavView');
 
+function drawHotItem(item) {
+    return m('div', { class: 'row' },
+        m('div', { class: 'col-md-auto' },
+            m('img', { src: 'book-clip-art-20.jpg' })
+        ),
+        m('div', { class: 'col' },
+            m('h3', { class: 'row' }, item.title),
+            m('div', { class: 'row' }, item.author),
+            m('div', { class: 'row' }, '$' + item.price),
+        )
+    );
+}
+
 const HomeView = {
+    oninit: async function(vnode) {
+        try {
+            this.hotitems = [];
+            this.hotitems = await m.request({
+                method: 'GET',
+                url: 'http://localhost:3570/listhotitems',
+            });
+        } catch(e) {
+        }
+    },
     view: function(vnode) {
         return [
             m(TopNavView),
@@ -13,26 +36,7 @@ const HomeView = {
                     ),
                     m('div', { class: 'col-md-9' },
                         m('h1', 'Hot Items'),
-                        m('div', { class: 'row' },
-                            m('div', { class: 'col-md-auto' },
-                                m('img', { src: 'book-clip-art-20.jpg' })
-                            ),
-                            m('div', { class: 'col' },
-                                m('h3', { class: 'row' }, 'Programming This and That'),
-                                m('div', { class: 'row' }, 'Albert Einstein'),
-                                m('div', { class: 'row' }, '$12.00'),
-                            )
-                        ),
-                        m('div', { class: 'row' },
-                            m('div', { class: 'col-md-auto' },
-                                m('img', { src: 'book-clip-art-20.jpg' })
-                            ),
-                            m('div', { class: 'col' },
-                                m('h3', { class: 'row' }, 'Programming This and That'),
-                                m('div', { class: 'row' }, 'Albert Einstein'),
-                                m('div', { class: 'row' }, '$12.00'),
-                            )
-                        )
+                        ...this.hotitems.map(drawHotItem)
                     ),
                 ),
             ),
