@@ -16,31 +16,23 @@ function drawBook(item) {
 }
 
 const CategoryView = {
-    onmatch: async function(args, requestPath) {
+    oninit: async function(vnode) {
         // console.log(args, requestPath);
         try {
-            this.category = args.category;
+            // console.log(vnode);
+            this.category = vnode.attrs.category;
             this.books = [];
             this.books = await m.request({
                 method: 'POST',
                 url: 'http://localhost:3570/listproducts',
-                data: { category: [args.category] }
+                data: { category: [this.category] }
             });
         } catch(e) {
+            console.log(e);
         }        
     },
-    // oninit: async function(vnode) {
-    //     console.log(vnode);
-    //     try {
-    //         this.hotitems = [];
-    //         this.hotitems = await m.request({
-    //             method: 'GET',
-    //             url: 'http://localhost:3570/listhotitems',
-    //         });
-    //     } catch(e) {
-    //     }
-    // },
-    render: function(vnode) {
+    view: function(vnode) {
+        // console.log(vnode);
         return [
             m(TopNavView),
             m('main', { role: 'main', class: 'container' },
