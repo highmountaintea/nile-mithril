@@ -27,6 +27,11 @@ function drawBook(item, lastPurchased) {
     ]
 }
 
+function buy(isbn) {
+    actions.setCartItem(isbn, 1);
+    m.route.set('/cart');
+}
+
 function drawBuy(item) {
     if (item.inventory === 0) {
         return m('div', { class: 'row' }, 'This item is currently out of stock');
@@ -36,7 +41,7 @@ function drawBuy(item) {
                 m('div', { class: 'row alert alert-warning' }, 'Only ' + item.inventory + ' items left.') :
                 null,
             m('div', { class: 'row justify-content-center' },
-                m('button', { class: 'btn btn-primary' }, 'Buy')
+                m('button', { class: 'btn btn-primary', onclick: () => { buy(item.isbn); } }, 'Buy')
             )
         ]
     }
