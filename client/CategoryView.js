@@ -8,12 +8,15 @@ function drawBook(item) {
             m('img', { src: 'book-clip-art-20.jpg' })
         ),
         m('div', { class: 'col' },
-            m('h3', { class: 'row' }, item.title),
+            m('h3', { class: 'row' },
+                m('a', { href: '/book/' + item.isbn, oncreate: m.route.link }, item.title)
+            ),
             m('div', { class: 'row' }, item.author),
             m('div', { class: 'row' }, '$' + item.price),
         )
     );
 }
+
 
 const CategoryView = {
     oninit: async function(vnode) {
