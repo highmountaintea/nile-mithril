@@ -15,9 +15,12 @@ const TopNavView = {
                     m('a', { class: 'nav-link', href: '#!/cart'}, 'Cart')
                 ),
             ),
-            m('form', { class: 'form-inline my-2 my-lg-0' },
-                m('input', { class: 'form-control mr-sm-2', type: 'text', placeholder: 'Search' }),
-                m('button', { class: 'btn btn-outline-success my-2 my-sm-0', type: 'submit' }, 'Search'),
+            m('div', { class: 'form-inline my-2 my-lg-0' },
+                m('input', { class: 'form-control mr-sm-2', type: 'text', placeholder: 'Search',
+                    oninput: m.withAttr('value', (value) => { this.term = value; }), value: this.term,
+                    onkeypress: (ev) => { if (ev.keyCode === 13 && this.term) m.route.set('/search/:term', { term: encodeURIComponent(this.term) }); } }),
+                m('button', { class: 'btn btn-outline-success my-2 my-sm-0', type: 'button',
+                    onclick: () => { if (this.term) m.route.set('/search/:term', { term: encodeURIComponent(this.term) }); } }, 'Search'),
             ),
         );
     }
