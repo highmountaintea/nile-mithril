@@ -26,6 +26,16 @@ body {
     border-bottom: 2px solid black;
 }
 
+.profile {
+    font-size: 20px;
+}
+
 .shoppingcart tr:last-of-type {
     border-top: 2px solid black;
+}
+
+.shoppinghistory-newentry {
+    padding-top: 15px;
+    margin-top: 15px;
+    border-top: 1px solid black;
 }

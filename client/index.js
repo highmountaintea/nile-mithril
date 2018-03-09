@@ -4,6 +4,7 @@ const CategoryView = require('./CategoryView');
 const SearchView = require('./SearchView');
 const BookView = require('./BookView');
 const CartView = require('./CartView');
+const ProfileView = require('./ProfileView');
 
 
 m.route(document.body, '/home', {
@@ -36,4 +37,5 @@ m.route(document.body, '/home', {
         }
     },
     '/cart': CartView,
+    '/profile': ProfileView,
 });
