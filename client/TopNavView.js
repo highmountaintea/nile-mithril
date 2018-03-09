@@ -24,8 +24,8 @@ const TopNavView = {
                 ),
                 m('li', { class: 'nav-item' },
                     model.user ?
-                        m('a', { class: 'nav-link', onclick: actions.logout }, 'Logout ' + model.user.username) :
-                        m('a', { class: 'nav-link', onclick: tryLogin }, 'Login')
+                        m('a', { class: 'btn btn-light', onclick: actions.logout }, 'Logout ' + model.user.username) :
+                        m('a', { class: 'btn btn-success', onclick: tryLogin }, 'Login')
                 ),
             ),
             m('div', { class: 'form-inline my-2 my-lg-0' },
