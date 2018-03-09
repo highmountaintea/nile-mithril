@@ -1,9 +1,13 @@
 const m = require('mithril');
 const TopNavView = require('./TopNavView');
 const LeftNavView = require('./LeftNavView');
+const actions = require('./modelactions');
 
-function drawBook(item) {
+function drawBook(item, lastPurchased) {
     return [
+        lastPurchased ?
+            m('div', { class: 'row alert alert-warning' }, 'You purchased this item ' + new Date(lastPurchased)) :
+            null,
         m('div', { class: 'row' },
             m('div', { class: 'col-md-auto' },
                 m('img', { src: 'book-clip-art-20.jpg' })
@@ -47,6 +51,18 @@ const BookView = {
                 url: 'http://localhost:3570/listproducts',
                 data: { isbn: [this.isbn] }
             }))[0];
+            this.user = actions.getModel().user;
+            this.lastPurchased = null;
+            if (this.user != null) {
+                let shoppingHistory = await m.request({
+                    method: 'POST',
+                    url: 'http://localhost:3570/listshoppinghistory',
+                    data: { token: this.user.token }
+                });
+                shoppingHistory.reverse();
+                let found = shoppingHistory.find(history => history.items.find(item => item.isbn === this.isbn));
+                if (found) this.lastPurchased = found.timestamp;
+            }
         } catch(e) {
             console.log(e);
         }        
@@ -61,7 +77,7 @@ const BookView = {
                         m(LeftNavView)
                     ),
                     m('div', { class: 'col-md-7' },
-                        this.book ? drawBook(this.book) : ''
+                        this.book ? drawBook(this.book, this.lastPurchased) : ''
                     ),
                     m('div', { class: 'col-md-2 alert alert-success' },
                         this.book ? drawBuy(this.book) : ''
