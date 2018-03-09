@@ -13,3 +13,19 @@ body {
 .purchase {
     border: 2px;
 }
+
+.shoppingcart {
+    font-size: 20px;
+}
+
+.shoppingcart td, .shoppingcart th {
+    padding: 4px 15px;
+}
+
+.shoppingcart th {
+    border-bottom: 2px solid black;
+}
+
+.shoppingcart tr:last-of-type {
+    border-top: 2px solid black;
+}
