@@ -1,7 +1,15 @@
 const m = require('mithril');
+const actions = require('./modelactions');
+
+function tryLogin() {
+    let username = prompt('Username');
+    let password = prompt('Password');
+    actions.login(username, password);
+}
 
 const TopNavView = {
     view: function(vnode) {
+        let model = actions.getModel();
         return m('nav', { class: 'navbar navbar-expand-md navbar-dark bg-dark fixed-top' },
             m('a', { class: 'navbar-brand', href: '#!/home' }, 'Nile'),
             m('ul', { class: 'navbar-nav mr-auto' },
@@ -13,6 +21,11 @@ const TopNavView = {
                 ),
                 m('li', { class: 'nav-item' },
                     m('a', { class: 'nav-link', href: '#!/cart'}, 'Cart')
+                ),
+                m('li', { class: 'nav-item' },
+                    model.user ?
+                        m('a', { class: 'nav-link', onclick: actions.logout }, 'Logout ' + model.user.username) :
+                        m('a', { class: 'nav-link', onclick: tryLogin }, 'Login')
                 ),
             ),
             m('div', { class: 'form-inline my-2 my-lg-0' },
