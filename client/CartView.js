@@ -25,13 +25,91 @@ async function updateCart(srcCart) {
     actions.setCart(cart);
 }
 
+function cartDirty(srcCart) {
+    if (!srcCart) return true;
+    let cart = actions.getCart();
+    if (srcCart.length !== cart.length) return true;
+    let dirty = false;
+    srcCart.forEach(srcItem => {
+        let item = cart.find(it => it.isbn === srcItem.isbn);
+        if (!item || item.quantity !== srcItem.quantity) dirty = true;
+    });
+    return dirty;
+}
+
+async function purchase(token, srcCart, payment) {
+    try {
+        if (srcCart.length === 0 || cartDirty(srcCart)) {
+            alert('This cart is out of sync, please refresh page');
+            return;
+        };
+        await m.request({
+            method: 'POST',
+            url: 'http://localhost:3570/purchase',
+            data: { token, items: srcCart, payment }
+        });
+        actions.setCart([]);
+        alert('Purchaed');
+        m.route.set('/home');
+    } catch(e) {
+        alert(e.toString());
+        console.log(e);
+    }
+}
+
+function drawCart(cart, updateCart) {
+    let model = actions.getModel();
+    let dirty = cartDirty(cart);
+    let canPurchase = cart.length > 0 && !dirty;
+    let totalPrice = Math.round(cart.reduce((sum, item) => sum + item.book.price * item.quantity, 0) * 100) / 100;
+    return m('div', { class: 'col-md-9' },
+        m('h1', 'Shopping Cart'),
+        m('table', { class: 'shoppingcart' },
+            m('tr',
+                m('th', 'Title'),
+                m('th', 'Price'),
+                m('th', 'Quantity'),
+                m('th', 'Total'),
+            ),
+            cart.map(item => m('tr',
+                m('td', item.book.title),
+                m('td', item.book.price),
+                m('td',
+                    m('input', { type: 'text', size: 3, value: item.quantity,
+                        oninput: m.withAttr('value', (value) => { cart.find(it => it.isbn === item.isbn).quantity = value; })
+                    })
+                ),
+                m('td', Math.round(item.book.price * item.quantity * 100) / 100)
+            )),
+            m('tr',
+                m('td',
+                    canPurchase ?
+                        model.user ?
+                            m('button', { class: 'btn btn-outline-success my-2 my-sm-0', type: 'button',
+                                onclick: async () => { await purchase(model.user.token, cart, totalPrice); } }, 'Purchase') :
+                            '** Login above to purchase **' :
+                            ''
+                ),
+                m('td', ''),
+                m('td',
+                    dirty ?
+                        m('button', { class: 'btn btn-outline-success my-2 my-sm-0', type: 'button',
+                            onclick: updateCart }, 'Update') :
+                        ''
+                ),
+                m('td', totalPrice),
+            )
+        ),
+    )
+}
+
 const CartView = {
     oninit: async function(vnode) {
         // console.log(args, requestPath);
         try {
             // console.log(vnode);
             this.cart = await getCart();
-            this.edited = false;
+            // this.edited = false;
         } catch(e) {
             console.log(e);
         }        
@@ -45,38 +123,7 @@ const CartView = {
                     m('div', { class: 'col-md-3' },
                         m(LeftNavView)
                     ),
-                    this.cart != null ?
-                        m('div', { class: 'col-md-9' },
-                            m('h1', this.category),
-                            m('table', { class: 'shoppingcart' },
-                                m('tr',
-                                    m('th', 'Title'),
-                                    m('th', 'Price'),
-                                    m('th', 'Quantity'),
-                                    m('th', 'Total'),
-                                ),
-                                this.cart.map(item => m('tr',
-                                    m('td', item.book.title),
-                                    m('td', item.book.price),
-                                    m('td',
-                                        m('input', { type: 'text', size: 3, value: item.quantity,
-                                            oninput: m.withAttr('value', (value) => { this.cart.find(it => it.isbn === item.isbn).quantity = value; this.edited = true; })
-                                        })
-                                    ),
-                                    m('td', Math.round(item.book.price * item.quantity * 100) / 100)
-                                )),
-                                m('tr',
-                                    m('td', ''),
-                                    m('td', ''),
-                                    m('td',
-                                        m('button', { class: 'btn btn-outline-success my-2 my-sm-0', type: 'button',
-                                            onclick: async () => { await updateCart(this.cart); this.cart = await getCart(); } }, 'Update')
-                                    ),
-                                    m('td', Math.round(this.cart.reduce((sum, item) => sum + item.book.price * item.quantity, 0) * 100) / 100),
-                                )
-                            )
-                        ) :
-                        null,
+                    this.cart != null ? drawCart(this.cart, async () => { await updateCart(this.cart); this.cart = await getCart(); }) : null
                 ),
             ),
         ];
