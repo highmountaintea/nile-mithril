@@ -17,6 +17,15 @@ Do the following to run nile-mithril on your browser:
 * `npm install` to install dependencies
 * `npm run dev` to run it in dev mode
 
+## Features
+
+* true multi-user environment
+* server persistence of transactions
+* shopping cart persistence across sessions
+* shopping history tracking
+* product searching
+* real-time inventory checking and warning
+
 ## Architecture
 
 This app uses `route-based` architecture. Each route represents a page, and has its own state. This architecture reduces dependencies between different parts of the application, and prevents exponential complexity growth as the application becomes larger.
