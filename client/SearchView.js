@@ -12,7 +12,7 @@ function drawBook(item) {
                 m('a', { href: '/book/' + item.isbn, oncreate: m.route.link }, item.title)
             ),
             m('div', { class: 'row' }, item.author),
-            m('div', { class: 'row' }, '$' + item.price),
+            m('div', { class: 'row' }, '$' + item.price.toFixed(2)),
         )
     );
 }

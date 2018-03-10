@@ -15,7 +15,7 @@ function drawBook(item, lastPurchased) {
             m('div', { class: 'col' },
                 m('h3', { class: 'row' }, item.title),
                 m('div', { class: 'row' }, item.author),
-                m('div', { class: 'row' }, '$' + item.price),
+                m('div', { class: 'row' }, '$' + item.price.toFixed(2)),
                 m('div', { class: 'row' }, 'isbn: ' + item.isbn),
             )
         ),

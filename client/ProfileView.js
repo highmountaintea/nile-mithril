@@ -7,7 +7,7 @@ function drawProfile(profile) {
     return [
         m('h1', { class: 'row' }, 'Profile'),
         m('div', { class: 'row' }, 'Username: ' + profile.username),
-        m('div', { class: 'row' }, 'Balance: $' + profile.balance),
+        m('div', { class: 'row' }, 'Balance: $' + profile.balance.toFixed(2)),
     ];
 }
 
@@ -15,7 +15,7 @@ function drawShoppingHistory(shoppinghistory) {
     return [
         ...shoppinghistory.map(hist => [
             m('div', { class: 'row shoppinghistory-newentry' }, 'Date: ' + new Date(hist.timestamp)),
-            m('div', { class: 'row' }, 'Total: $' + hist.payment),
+            m('div', { class: 'row' }, 'Total: $' + hist.payment.toFixed(2)),
             ...hist.items.map(item => m('div', { class: 'row' }, 'ISBN: ' + item.isbn + ' x' + item.quantity))
         ])
     ];

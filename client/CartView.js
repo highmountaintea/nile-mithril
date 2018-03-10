@@ -73,13 +73,13 @@ function drawCart(cart, updateCart) {
             ),
             cart.map(item => m('tr',
                 m('td', item.book.title),
-                m('td', item.book.price),
+                m('td', item.book.price.toFixed(2)),
                 m('td',
                     m('input', { type: 'text', size: 3, value: item.quantity,
                         oninput: m.withAttr('value', (value) => { cart.find(it => it.isbn === item.isbn).quantity = value; })
                     })
                 ),
-                m('td', Math.round(item.book.price * item.quantity * 100) / 100)
+                m('td', (item.book.price * item.quantity).toFixed(2))
             )),
             m('tr',
                 m('td',
@@ -97,7 +97,7 @@ function drawCart(cart, updateCart) {
                             onclick: updateCart }, 'Update') :
                         ''
                 ),
-                m('td', totalPrice),
+                m('td', totalPrice.toFixed(2)),
             )
         ),
     )
