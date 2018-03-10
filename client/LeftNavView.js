@@ -1,8 +1,8 @@
 const m = require('mithril');
 
 function drawCategory(category) {
-    return m('li',
-        m('a', { href: '/category/' + category, oncreate: m.route.link }, category)
+    return m('li', { class: 'nav-item category' },
+        m('a', { class: 'nav-link', href: '/category/' + category, oncreate: m.route.link }, category)
     );
 }
 
@@ -19,7 +19,7 @@ const LeftNavView = {
         }
     },
     view: function(vnode) {
-        return m('ul', { class: 'left-nav' },
+        return m('ul', { class: 'nav flex-column left-nav' },
             ...this.categories.map(drawCategory)
         );
     }

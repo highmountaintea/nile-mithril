@@ -44,7 +44,7 @@ const CategoryView = {
                         m(LeftNavView)
                     ),
                     m('div', { class: 'col-md-9' },
-                        m('h1', this.category),
+                        m('h1', { class: 'category' }, this.category),
                         ...this.books.map(drawBook)
                     ),
                 ),
