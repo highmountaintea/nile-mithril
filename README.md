@@ -26,6 +26,13 @@ Do the following to run nile-mithril on your browser:
 * product searching
 * real-time inventory checking and warning
 
+## Directory Structure
+
+This application is created using [`create-mithril-app`](https://www.npmjs.com/package/create-mithril-app). It has two main folders:
+
+* `client` - Javascript code
+* `public` - index.html, css, and images
+
 ## Architecture
 
 This app uses `route-based` architecture. Each route represents a page, and has its own state. This architecture reduces dependencies between different parts of the application, and prevents exponential complexity growth as the application becomes larger.
