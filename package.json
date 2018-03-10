@@ -1,6 +1,6 @@
 {
   "name": "nile-mithril",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Nile-mithril - Online Bookstore based on nile-server",
   "main": "index.js",
   "scripts": {
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/johnfliu818/sample-mithril-app.git"
+    "url": "git+https://github.com/johnfliu818/nile-mithril.git"
   },
   "author": "johnfliu",
   "license": "ISC",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/johnfliu818/nile-mithril/issues"
   },
-  "homepage": "",
+  "homepage": "https://github.com/johnfliu818/nile-mithril#readme",
   "dependencies": {
     "mithril": "^1.1.6"
   },
