@@ -1,7 +1,7 @@
 {
-  "name": "sample-mithril-app",
-  "version": "0.1.0",
-  "description": "",
+  "name": "nile-mithril",
+  "version": "0.2.9",
+  "description": "Nile-mithril - Online Bookstore based on nile-server",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --config webpack.dev.js",
@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/johnfliu818/sample-mithril-app.git"
   },
-  "author": "",
+  "author": "johnfliu",
   "license": "ISC",
   "bugs": {
     "url": ""
