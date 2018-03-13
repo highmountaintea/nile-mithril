@@ -4,6 +4,8 @@ This is an online bookstore written on mithril.js framework, based off [`nile-se
 
 ## Running the App
 
+[Demo hosted on AWS and Heroku](http://nile-mithril.s3-website.us-east-2.amazonaws.com)
+
 This app works in tandem with `nile-server`. nile-server runs the backend, while this app runs as the frontend.
 
 Type the following to run nile-server on port 3570:
@@ -44,3 +46,9 @@ Some state has to be shared between pages, such as user login session. This info
 * [More about nile-server](https://www.npmjs.com/package/nile-server)
 
 [`nile-server`](https://www.npmjs.com/package/nile-server)'s API is mostly simple JSON CRUD operations, with some querying capabilities to tie different resultsets together. This simplicity makes consuming the API pretty straightforward.
+
+## To Do
+
+* replace window alerts with modal message boxes
+* add ability to replenish balance
+* improve search
