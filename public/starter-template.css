@@ -43,3 +43,7 @@ body {
 .category {
     text-transform: uppercase;
 }
+
+.main-logo {
+    margin-right: 10px;
+}

@@ -11,6 +11,7 @@ const TopNavView = {
     view: function(vnode) {
         let model = actions.getModel();
         return m('nav', { class: 'navbar navbar-expand-md navbar-dark bg-dark fixed-top' },
+            m('img', { class: 'main-logo', src: 'nilelogo.jpg' }),
             m('a', { class: 'navbar-brand', href: '#!/home' }, 'Nile'),
             m('ul', { class: 'navbar-nav mr-auto' },
                 m('li', { class: 'nav-item' },
