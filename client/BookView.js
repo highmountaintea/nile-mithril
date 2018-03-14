@@ -53,7 +53,7 @@ const BookView = {
             this.isbn = vnode.attrs.isbn;
             this.book = (await m.request({
                 method: 'POST',
-                url: 'http://localhost:3570/listproducts',
+                url: MITHRIL_SERVER_URL + '/listproducts',
                 data: { isbn: [this.isbn] }
             }))[0];
             this.user = actions.getModel().user;
@@ -61,7 +61,7 @@ const BookView = {
             if (this.user != null) {
                 let shoppingHistory = await m.request({
                     method: 'POST',
-                    url: 'http://localhost:3570/listshoppinghistory',
+                    url: MITHRIL_SERVER_URL + '/listshoppinghistory',
                     data: { token: this.user.token }
                 });
                 shoppingHistory.reverse();

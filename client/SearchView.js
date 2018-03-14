@@ -27,7 +27,7 @@ const SearchView = {
             this.books = [];
             this.books = await m.request({
                 method: 'POST',
-                url: 'http://localhost:3570/listproducts',
+                url: MITHRIL_SERVER_URL + '/listproducts',
                 data: { textContent: this.term }
             });
         } catch(e) {

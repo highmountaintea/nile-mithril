@@ -32,12 +32,12 @@ const ProfileView = {
             if (this.loggedIn) {
                 this.profile = await m.request({
                     method: 'POST',
-                    url: 'http://localhost:3570/profile',
+                    url: MITHRIL_SERVER_URL + '/profile',
                     data: { token: model.user.token }
                 });
                 this.shoppinghistory = await m.request({
                     method: 'POST',
-                    url: 'http://localhost:3570/listshoppinghistory',
+                    url: MITHRIL_SERVER_URL + '/listshoppinghistory',
                     data: { token: model.user.token }
                 });
                 this.shoppinghistory.reverse();

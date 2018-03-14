@@ -12,7 +12,7 @@ const LeftNavView = {
             this.categories = [];
             this.categories = await m.request({
                 method: 'GET',
-                url: 'http://localhost:3570/listcategories',
+                url: MITHRIL_SERVER_URL + '/listcategories',
             });
             this.categories.sort();
         } catch(e) {

@@ -23,7 +23,7 @@ const HomeView = {
             this.hotitems = [];
             this.hotitems = await m.request({
                 method: 'GET',
-                url: 'http://localhost:3570/listhotitems',
+                url: MITHRIL_SERVER_URL + '/listhotitems',
             });
         } catch(e) {
         }

@@ -27,7 +27,7 @@ const CategoryView = {
             this.books = [];
             this.books = await m.request({
                 method: 'POST',
-                url: 'http://localhost:3570/listproducts',
+                url: MITHRIL_SERVER_URL + '/listproducts',
                 data: { category: [this.category] }
             });
         } catch(e) {

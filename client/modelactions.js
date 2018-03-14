@@ -8,12 +8,12 @@ async function login(username, password) {
     try {
         let token = await m.request({
             method: 'POST',
-            url: 'http://localhost:3570/login',
+            url: MITHRIL_SERVER_URL + '/login',
             data: { username, password }
         });
         let profile = await m.request({
             method: 'POST',
-            url: 'http://localhost:3570/profile',
+            url: MITHRIL_SERVER_URL + '/profile',
             data: { token }
         });
         model.user = {

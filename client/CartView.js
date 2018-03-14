@@ -7,7 +7,7 @@ async function getCart() {
     let cart = actions.getCart();
     let books = await m.request({
         method: 'POST',
-        url: 'http://localhost:3570/listproducts',
+        url: MITHRIL_SERVER_URL + '/listproducts',
         data: { isbn: cart.map(item => item.isbn) },
     });
     cart.forEach(item => { item.book = books.find(b => b.isbn === item.isbn )});
@@ -45,7 +45,7 @@ async function purchase(token, srcCart, payment) {
         };
         await m.request({
             method: 'POST',
-            url: 'http://localhost:3570/purchase',
+            url: MITHRIL_SERVER_URL + '/purchase',
             data: { token, items: srcCart, payment }
         });
         actions.setCart([]);
