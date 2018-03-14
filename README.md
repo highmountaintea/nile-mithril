@@ -4,7 +4,7 @@ This is an online bookstore written on mithril.js framework, based off [`nile-se
 
 ## Running the App
 
-[Demo hosted on AWS and Heroku](http://nile-mithril.s3-website.us-east-2.amazonaws.com)
+Check out [Demo on AWS](http://nile-mithril.s3-website.us-east-2.amazonaws.com).
 
 This app works in tandem with `nile-server`. nile-server runs the backend, while this app runs as the frontend.
 
@@ -14,7 +14,7 @@ npx nile-server
 ```
 
 Do the following to run nile-mithril on your browser:
-* clone this git repo
+* clone this [git repo](https://github.com/johnfliu818/nile-mithril)
 * go to cloned repo directory
 * `npm install` to install dependencies
 * `npm run dev` to run it in dev mode
