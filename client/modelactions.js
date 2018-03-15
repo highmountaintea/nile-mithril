@@ -20,6 +20,7 @@ async function login(username, password) {
             token,
             username: profile.username
         };
+        m.route.set(m.route.get(), null, { replace: false });
     } catch(e) {
         alert('login failed');
         console.log(e);
@@ -28,6 +29,7 @@ async function login(username, password) {
 
 function logout() {
     model.user = null;
+    m.route.set(m.route.get(), null, { replace: false });
 }
 
 function getCart() {
