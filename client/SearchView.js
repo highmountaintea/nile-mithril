@@ -28,7 +28,7 @@ const SearchView = {
             this.books = await m.request({
                 method: 'POST',
                 url: MITHRIL_SERVER_URL + '/listproducts',
-                data: { textContent: this.term }
+                data: { textContent: this.term.replace(/\s+/g, '[^]+') }
             });
         } catch(e) {
             console.log(e);
