@@ -14,7 +14,7 @@ npx nile-server
 ```
 
 Do the following to run nile-mithril on your browser:
-* clone this [git repo](https://github.com/johnfliu818/nile-mithril)
+* clone this [git repo](https://github.com/highmountaintea/nile-mithril)
 * go to cloned repo directory
 * `npm install` to install dependencies
 * `npm run dev` to run it in dev mode
