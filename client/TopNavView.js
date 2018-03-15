@@ -2,8 +2,8 @@ const m = require('mithril');
 const actions = require('./modelactions');
 
 function tryLogin() {
-    let username = prompt('Username');
-    let password = prompt('Password');
+    let username = prompt('Username (for demo, use: plato)');
+    let password = prompt('Password (for demo, use: plato2)');
     actions.login(username, password);
 }
 
@@ -11,8 +11,8 @@ const TopNavView = {
     view: function(vnode) {
         let model = actions.getModel();
         return m('nav', { class: 'navbar navbar-expand-md navbar-dark bg-dark fixed-top' },
-            m('img', { class: 'main-logo', src: 'nilelogo.jpg' }),
-            m('a', { class: 'navbar-brand', href: '#!/home' }, 'Nile'),
+            m('a', { class: 'navbar-brand', href: 'https://www.npmjs.com/package/nile-mithril' }, m('img', { class: 'main-logo', src: 'nilelogo.jpg' })),
+            m('a', { class: 'navbar-brand', href: 'https://www.npmjs.com/package/nile-mithril' }, 'Nile'),
             m('ul', { class: 'navbar-nav mr-auto' },
                 m('li', { class: 'nav-item' },
                     m('a', { class: 'nav-link', href: '#!/home'}, 'Home')
