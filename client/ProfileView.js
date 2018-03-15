@@ -3,11 +3,31 @@ const TopNavView = require('./TopNavView');
 const LeftNavView = require('./LeftNavView');
 const actions = require('./modelactions');
 
+async function addBalance() {
+    try {
+        let model = actions.getModel();
+        await m.request({
+            method: 'POST',
+            url: MITHRIL_SERVER_URL + '/addbalance',
+            data: {
+                token: model.user.token,
+                cardNo: '5555666677778888',
+                amount: 50.00
+            }
+        });
+        m.route.set(m.route.get(), null, { replace: false });
+    } catch(e) {
+        alert('unable to add money');
+    }
+}
+
 function drawProfile(profile) {
     return [
         m('h1', { class: 'row' }, 'Profile'),
         m('div', { class: 'row' }, 'Username: ' + profile.username),
-        m('div', { class: 'row' }, 'Balance: $' + profile.balance.toFixed(2)),
+        m('div', { class: 'row' }, 'Balance: $' + profile.balance.toFixed(2),
+            m('a', { class: 'btn btn-light', onclick: addBalance }, 'Add $50')
+        ),
     ];
 }
 

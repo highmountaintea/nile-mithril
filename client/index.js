@@ -37,5 +37,13 @@ m.route(document.body, '/home', {
         }
     },
     '/cart': CartView,
-    '/profile': ProfileView,
+    '/profile': {
+        onmatch: function(args) {
+            this.key = Date.now();
+        },
+        render: function(vnode) {
+            // console.log(this.key, vnode);
+            return m(ProfileView, {key: this.key, ...vnode.attrs});
+        }
+    }
 });
