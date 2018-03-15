@@ -50,5 +50,4 @@ Some state has to be shared between pages, such as user login session. This info
 ## To Do
 
 * replace window alerts with modal message boxes
-* add ability to replenish balance
-* improve search
+* refactor
