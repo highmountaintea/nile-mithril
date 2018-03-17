@@ -4,7 +4,7 @@ This is an online bookstore written on mithril.js framework, based off [`nile-se
 
 ## Running the App
 
-Check out [Demo on AWS](http://nile-mithril.s3-website.us-east-2.amazonaws.com).
+Check out [Demo on AWS](https://nile-mithril.idgen.com).
 
 This app works in tandem with `nile-server`. nile-server runs the backend, while this app runs as the frontend.
 
