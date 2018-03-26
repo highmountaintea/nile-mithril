@@ -1,4 +1,5 @@
 const m = require('mithril');
+const dateformat = require('dateformat');
 const TopNavView = require('./TopNavView');
 const LeftNavView = require('./LeftNavView');
 const actions = require('./modelactions');
@@ -34,7 +35,7 @@ function drawProfile(profile) {
 function drawShoppingHistory(shoppinghistory) {
     return [
         ...shoppinghistory.map(hist => [
-            m('div', { class: 'row shoppinghistory-newentry' }, 'Date: ' + new Date(hist.timestamp)),
+            m('div', { class: 'row shoppinghistory-newentry' }, 'Date: ' + dateformat(new Date(hist.timestamp), 'isoDate')),
             m('div', { class: 'row' }, 'Total: $' + hist.payment.toFixed(2)),
             ...hist.items.map(item => m('div', { class: 'row' }, 'ISBN: ' + item.isbn + ' x' + item.quantity))
         ])

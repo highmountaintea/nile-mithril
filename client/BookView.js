@@ -1,4 +1,5 @@
 const m = require('mithril');
+const dateformat = require('dateformat');
 const TopNavView = require('./TopNavView');
 const LeftNavView = require('./LeftNavView');
 const actions = require('./modelactions');
@@ -6,7 +7,7 @@ const actions = require('./modelactions');
 function drawBook(item, lastPurchased) {
     return [
         lastPurchased ?
-            m('div', { class: 'row alert alert-warning' }, 'You purchased this item ' + new Date(lastPurchased)) :
+            m('div', { class: 'row alert alert-warning' }, 'You purchased this item on ' + dateformat(new Date(lastPurchased), 'isoDate')) :
             null,
         m('div', { class: 'row' },
             m('div', { class: 'col-md-auto' },
@@ -41,7 +42,7 @@ function drawBuy(item) {
                 m('div', { class: 'row alert alert-warning' }, 'Only ' + item.inventory + ' items left.') :
                 null,
             m('div', { class: 'row justify-content-center' },
-                m('button', { class: 'btn btn-primary', onclick: () => { buy(item.isbn); } }, 'Buy')
+                m('button', { class: 'btn btn-primary', onclick: () => { buy(item.isbn); } }, 'Add to Cart')
             )
         ]
     }
