@@ -1,6 +1,6 @@
 {
   "name": "nile-mithril",
-  "version": "0.2.22",
+  "version": "0.2.23",
   "description": "Nile-mithril - Online Bookstore based on nile-server",
   "main": "index.js",
   "scripts": {
