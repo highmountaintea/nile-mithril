@@ -21,7 +21,7 @@
   "homepage": "https://github.com/highmountaintea/nile-mithril#readme",
   "dependencies": {
     "dateformat": "^3.0.3",
-    "mithril": "^1.1.6"
+    "mithril": "^2.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
