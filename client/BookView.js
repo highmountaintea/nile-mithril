@@ -48,33 +48,36 @@ function drawBuy(item) {
     }
 }
 
-const BookView = {
-    oninit: async function(vnode) {
+function BookView({ attrs }) {
+    let isbn = attrs.isbn;
+    let book;
+    let user;
+    let lastPurchased = null;
+
+    async function oninit({ attrs }) {
         try {
-            this.isbn = vnode.attrs.isbn;
-            this.book = (await m.request({
+            book = (await m.request({
                 method: 'POST',
                 url: MITHRIL_SERVER_URL + '/listproducts',
-                data: { isbn: [this.isbn] }
+                body: { isbn: [isbn] }
             }))[0];
-            this.user = actions.getModel().user;
-            this.lastPurchased = null;
-            if (this.user != null) {
+            user = actions.getModel().user;
+            if (user != null) {
                 let shoppingHistory = await m.request({
                     method: 'POST',
                     url: MITHRIL_SERVER_URL + '/listshoppinghistory',
-                    data: { token: this.user.token }
+                    body: { token: user.token }
                 });
                 shoppingHistory.reverse();
-                let found = shoppingHistory.find(history => history.items.find(item => item.isbn === this.isbn));
-                if (found) this.lastPurchased = found.timestamp;
+                let found = shoppingHistory.find(history => history.items.find(item => item.isbn === isbn));
+                if (found) lastPurchased = found.timestamp;
             }
-        } catch(e) {
+        } catch (e) {
             console.log(e);
-        }        
-    },
-    view: function(vnode) {
-        // console.log(vnode);
+        }
+    }
+
+    function view({ attrs }) {
         return [
             m(TopNavView),
             m('main', { role: 'main', class: 'container' },
@@ -83,15 +86,17 @@ const BookView = {
                         m(LeftNavView)
                     ),
                     m('div', { class: 'col-md-7' },
-                        this.book ? drawBook(this.book, this.lastPurchased) : ''
+                        book ? drawBook(book, lastPurchased) : ''
                     ),
                     m('div', { class: 'col-md-2 alert alert-success' },
-                        this.book ? drawBuy(this.book) : ''
+                        book ? drawBuy(book) : ''
                     )
                 ),
             ),
         ];
     }
-};
+
+    return { oninit, view };
+}
 
 module.exports = BookView;

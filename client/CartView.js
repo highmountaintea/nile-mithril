@@ -46,7 +46,7 @@ async function purchase(token, srcCart, payment) {
         await m.request({
             method: 'POST',
             url: MITHRIL_SERVER_URL + '/purchase',
-            data: { token, items: srcCart, payment }
+            body: { token, items: srcCart, payment }
         });
         actions.setCart([]);
         alert('Purchaed');
@@ -76,7 +76,7 @@ function drawCart(cart, updateCart) {
                 m('td', item.book.price.toFixed(2)),
                 m('td',
                     m('input', { type: 'text', size: 3, value: item.quantity,
-                        oninput: m.withAttr('value', (value) => { cart.find(it => it.isbn === item.isbn).quantity = value; })
+                        oninput: (ev) => { cart.find(it => it.isbn === item.isbn).quantity = ev.currentTarget.value; }
                     })
                 ),
                 m('td', (item.book.price * item.quantity).toFixed(2))
@@ -103,19 +103,18 @@ function drawCart(cart, updateCart) {
     )
 }
 
-const CartView = {
-    oninit: async function(vnode) {
-        // console.log(args, requestPath);
+function CartView({ attrs }) {
+    let cart;
+
+    async function oninit({ attrs }) {
         try {
-            // console.log(vnode);
-            this.cart = await getCart();
-            // this.edited = false;
-        } catch(e) {
+            cart = await getCart();
+        } catch (e) {
             console.log(e);
         }        
-    },
-    view: function(vnode) {
-        // console.log(vnode);
+    }
+
+    function view({ attrs }) {
         return [
             m(TopNavView),
             m('main', { role: 'main', class: 'container' },
@@ -123,11 +122,13 @@ const CartView = {
                     m('div', { class: 'col-md-3' },
                         m(LeftNavView)
                     ),
-                    this.cart != null ? drawCart(this.cart, async () => { await updateCart(this.cart); this.cart = await getCart(); }) : null
+                    cart != null ? drawCart(cart, async () => { await updateCart(cart); cart = await getCart(); }) : null
                 ),
             ),
         ];
     }
-};
+
+    return { oninit, view };
+}
 
 module.exports = CartView;

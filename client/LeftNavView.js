@@ -2,27 +2,31 @@ const m = require('mithril');
 
 function drawCategory(category) {
     return m('li', { class: 'nav-item category' },
-        m('a', { class: 'nav-link', href: '/category/' + category, oncreate: m.route.link }, category)
+        m(m.route.Link, { class: 'nav-link', href: '/category/' + category }, category)
     );
 }
 
-const LeftNavView = {
-    oninit: async function(vnode) {
+function LeftNavView({ attrs }) {
+    let categories = [];
+
+    async function oninit({ attrs }) {
         try {
-            this.categories = [];
-            this.categories = await m.request({
+            categories = await m.request({
                 method: 'GET',
                 url: MITHRIL_SERVER_URL + '/listcategories',
             });
-            this.categories.sort();
+            categories.sort();
         } catch(e) {
         }
-    },
-    view: function(vnode) {
+    }
+
+    function view({ attrs }) {
         return m('ul', { class: 'nav flex-column left-nav' },
-            ...this.categories.map(drawCategory)
+            ...categories.map(drawCategory)
         );
     }
-};
+
+    return { oninit, view };
+}
 
 module.exports = LeftNavView;

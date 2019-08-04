@@ -7,8 +7,22 @@ function tryLogin() {
     actions.login(username, password);
 }
 
-const TopNavView = {
-    view: function(vnode) {
+function TopNavView({ attrs }) {
+    let term = '';
+
+    function termInput(ev) {
+        term = ev.currentTarget.value;
+    }
+
+    function termKeyPress(ev) {
+        if (ev.keyCode === 13 && term) m.route.set('/search/:term', { term: encodeURIComponent(term) });
+    }
+
+    function onButton(ev) {
+        if (term) m.route.set('/search/:term', { term: encodeURIComponent(term) });
+    }
+
+    function view({ attrs }) {
         let model = actions.getModel();
         return m('nav', { class: 'navbar navbar-expand-md navbar-dark bg-dark fixed-top' },
             m('a', { class: 'navbar-brand', href: 'https://www.npmjs.com/package/nile-mithril' }, m('img', { class: 'main-logo', src: 'nilelogo.jpg' })),
@@ -31,13 +45,17 @@ const TopNavView = {
             ),
             m('div', { class: 'form-inline my-2 my-lg-0' },
                 m('input', { class: 'form-control mr-sm-2', type: 'text', placeholder: 'Search',
-                    oninput: m.withAttr('value', (value) => { this.term = value; }), value: this.term,
-                    onkeypress: (ev) => { if (ev.keyCode === 13 && this.term) m.route.set('/search/:term', { term: encodeURIComponent(this.term) }); } }),
+                    oninput: termInput, value: term,
+                    onkeypress: termKeyPress,
+                }),
                 m('button', { class: 'btn btn-outline-success my-2 my-sm-0', type: 'button',
-                    onclick: () => { if (this.term) m.route.set('/search/:term', { term: encodeURIComponent(this.term) }); } }, 'Search'),
+                    onclick: onButton,
+                }, 'Search'),
             ),
         );
     }
-};
+
+    return { view };
+}
 
 module.exports = TopNavView;

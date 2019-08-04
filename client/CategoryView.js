@@ -9,7 +9,7 @@ function drawBook(item) {
         ),
         m('div', { class: 'col' },
             m('h3', { class: 'row' },
-                m('a', { href: '/book/' + item.isbn, oncreate: m.route.link }, item.title)
+                m(m.route.Link, { href: '/book/' + item.isbn }, item.title)
             ),
             m('div', { class: 'row' }, item.author),
             m('div', { class: 'row' }, '$' + item.price.toFixed(2)),
@@ -18,24 +18,23 @@ function drawBook(item) {
 }
 
 
-const CategoryView = {
-    oninit: async function(vnode) {
-        // console.log(args, requestPath);
+function CategoryView({ attrs }) {
+    let category = attrs.category;
+    let books = [];
+
+    async function oninit({ attrs }) {
         try {
-            // console.log(vnode);
-            this.category = vnode.attrs.category;
-            this.books = [];
-            this.books = await m.request({
+            books = await m.request({
                 method: 'POST',
                 url: MITHRIL_SERVER_URL + '/listproducts',
-                data: { category: [this.category] }
+                body: { category: [category] }
             });
         } catch(e) {
             console.log(e);
-        }        
-    },
-    view: function(vnode) {
-        // console.log(vnode);
+        }
+    }
+
+    function view({ attrs }) {
         return [
             m(TopNavView),
             m('main', { role: 'main', class: 'container' },
@@ -44,13 +43,15 @@ const CategoryView = {
                         m(LeftNavView)
                     ),
                     m('div', { class: 'col-md-9' },
-                        m('h1', { class: 'category' }, this.category),
-                        ...this.books.map(drawBook)
+                        m('h1', { class: 'category' }, category),
+                        ...books.map(drawBook)
                     ),
                 ),
             ),
         ];
     }
-};
+
+    return { oninit, view };
+}
 
 module.exports = CategoryView;

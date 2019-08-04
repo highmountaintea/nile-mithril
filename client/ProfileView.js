@@ -10,7 +10,7 @@ async function addBalance() {
         await m.request({
             method: 'POST',
             url: MITHRIL_SERVER_URL + '/addbalance',
-            data: {
+            body: {
                 token: model.user.token,
                 cardNo: '5555666677778888',
                 amount: 50.00
@@ -43,32 +43,34 @@ function drawShoppingHistory(shoppinghistory) {
 }
 
 
-const ProfileView = {
-    oninit: async function(vnode) {
-        // console.log(args, requestPath);
+function ProfileView({ attrs }) {
+    let loggedIn;
+    let profile;
+    let shoppinghistory;
+
+    async function oninit({ attrs }) {
         try {
-            // console.log(vnode);
             let model = actions.getModel();
-            this.loggedIn = model.user != null;
-            if (this.loggedIn) {
-                this.profile = await m.request({
+            loggedIn = model.user != null;
+            if (loggedIn) {
+                profile = await m.request({
                     method: 'POST',
                     url: MITHRIL_SERVER_URL + '/profile',
-                    data: { token: model.user.token }
+                    body: { token: model.user.token }
                 });
-                this.shoppinghistory = await m.request({
+                shoppinghistory = await m.request({
                     method: 'POST',
                     url: MITHRIL_SERVER_URL + '/listshoppinghistory',
-                    data: { token: model.user.token }
+                    body: { token: model.user.token }
                 });
-                this.shoppinghistory.reverse();
+                shoppinghistory.reverse();
             }
-        } catch(e) {
+        } catch (e) {
             console.log(e);
         }        
-    },
-    view: function(vnode) {
-        // console.log(vnode);
+    }
+
+    function view({ attrs }) {
         return [
             m(TopNavView),
             m('main', { role: 'main', class: 'container' },
@@ -77,15 +79,17 @@ const ProfileView = {
                         m(LeftNavView)
                     ),
                     m('div', { class: 'col-md-9 profile' },
-                        this.loggedIn ? [
-                          this.profile ? drawProfile(this.profile) : null,
-                          this.shoppinghistory ? drawShoppingHistory(this.shoppinghistory) : null,  
+                        loggedIn ? [
+                          profile ? drawProfile(profile) : null,
+                          shoppinghistory ? drawShoppingHistory(shoppinghistory) : null,  
                         ] : 'Not logged in'
                     ),
                 ),
             ),
         ];
     }
-};
+
+    return { oninit, view };
+}
 
 module.exports = ProfileView;

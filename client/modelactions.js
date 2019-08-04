@@ -9,19 +9,19 @@ async function login(username, password) {
         let token = await m.request({
             method: 'POST',
             url: MITHRIL_SERVER_URL + '/login',
-            data: { username, password }
+            body: { username, password }
         });
         let profile = await m.request({
             method: 'POST',
             url: MITHRIL_SERVER_URL + '/profile',
-            data: { token }
+            body: { token }
         });
         model.user = {
             token,
             username: profile.username
         };
         m.route.set(m.route.get(), null, { replace: false });
-    } catch(e) {
+    } catch (e) {
         alert('login failed');
         console.log(e);
     }        

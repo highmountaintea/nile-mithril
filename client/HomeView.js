@@ -9,7 +9,7 @@ function drawHotItem(item) {
         ),
         m('div', { class: 'col' },
             m('h3', { class: 'row' },
-               m('a', { href: '/book/' + item.isbn, oncreate: m.route.link }, item.title)
+                m(m.route.Link, { href: '/book/' + item.isbn }, item.title)
             ),
             m('div', { class: 'row' }, item.author),
             m('div', { class: 'row' }, '$' + item.price.toFixed(2)),
@@ -17,18 +17,20 @@ function drawHotItem(item) {
     );
 }
 
-const HomeView = {
-    oninit: async function(vnode) {
+function HomeView({ attrs }) {
+    let hotitems = [];
+
+    async function oninit({ attrs }) {
         try {
-            this.hotitems = [];
-            this.hotitems = await m.request({
+            hotitems = await m.request({
                 method: 'GET',
                 url: MITHRIL_SERVER_URL + '/listhotitems',
             });
-        } catch(e) {
-        }
-    },
-    view: function(vnode) {
+        } catch (e) {
+        }    
+    }
+
+    function view({ attrs }) {
         return [
             m(TopNavView),
             m('main', { role: 'main', class: 'container' },
@@ -38,12 +40,14 @@ const HomeView = {
                     ),
                     m('div', { class: 'col-md-9' },
                         m('h1', 'Hot Items'),
-                        ...this.hotitems.map(drawHotItem)
+                        ...hotitems.map(drawHotItem)
                     ),
                 ),
             ),
         ];
     }
-};
+
+    return { oninit, view };
+}
 
 module.exports = HomeView;

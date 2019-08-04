@@ -15,10 +15,8 @@ m.route(document.body, '/home', {
                 'page_title' : 'home',
                 'page_path': window.location.hash
             });
+            return { view: vnode => m(HomeView, vnode.attrs) };
         },
-        render: function(vnode) {
-            return m(HomeView, { ...vnode.attrs });
-        }
     },
     '/category/:category': {
         onmatch: function(args) {
@@ -26,12 +24,8 @@ m.route(document.body, '/home', {
                 'page_title' : 'category view',
                 'page_path': window.location.hash
             });
-            this.key = Date.now();
+            return { view: vnode => m(CategoryView, vnode.attrs) };
         },
-        render: function(vnode) {
-            // console.log(this.key, vnode);
-            return m(CategoryView, {key: this.key, ...vnode.attrs});
-        }
     },
     '/search/:term': {
         onmatch: function(args) {
@@ -39,12 +33,8 @@ m.route(document.body, '/home', {
                 'page_title' : 'search view',
                 'page_path': window.location.hash
             });
-            this.key = Date.now();
+            return { view: vnode => m(SearchView, vnode.attrs) };
         },
-        render: function(vnode) {
-            // console.log(this.key, vnode);
-            return m(SearchView, {key: this.key, ...vnode.attrs});
-        }
     },
     '/book/:isbn': {
         onmatch: function(args) {
@@ -52,12 +42,8 @@ m.route(document.body, '/home', {
                 'page_title' : 'product view',
                 'page_path': window.location.hash
             });
-            this.key = Date.now();
+            return { view: vnode => m(BookView, vnode.attrs) };
         },
-        render: function(vnode) {
-            // console.log(this.key, vnode);
-            return m(BookView, {key: this.key, ...vnode.attrs});
-        }
     },
     '/cart': {
         onmatch: function(args) {
@@ -65,10 +51,8 @@ m.route(document.body, '/home', {
                 'page_title' : 'cart',
                 'page_path': window.location.hash
             });
+            return { view: vnode => m(CartView, vnode.attrs) };
         },
-        render: function(vnode) {
-            return m(CartView, { ...vnode.attrs });
-        }
     },
     '/profile': {
         onmatch: function(args) {
@@ -76,11 +60,7 @@ m.route(document.body, '/home', {
                 'page_title' : 'profile',
                 'page_path': window.location.hash
             });
-            this.key = Date.now();
+            return { view: vnode => m(ProfileView, vnode.attrs) };
         },
-        render: function(vnode) {
-            // console.log(this.key, vnode);
-            return m(ProfileView, {key: this.key, ...vnode.attrs});
-        }
     }
 });
