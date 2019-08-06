@@ -1,6 +1,7 @@
 const m = require('mithril');
 const TopNavView = require('./TopNavView');
 const LeftNavView = require('./LeftNavView');
+const Modal = require('./modal');
 const actions = require('./modelactions');
 
 async function getCart() {
@@ -40,7 +41,15 @@ function cartDirty(srcCart) {
 async function purchase(token, srcCart, payment) {
     try {
         if (srcCart.length === 0 || cartDirty(srcCart)) {
-            alert('This cart is out of sync, please refresh page');
+            Modal.open(
+                m('div', [
+                    m('h3', 'Error'),
+                    m('hr'),
+                    m('div', 'This cart is out of sync, please refresh page'),
+                    m('hr'),
+                    m('button', { onclick: Modal.close }, 'Close'),
+                ])
+            );
             return;
         };
         await m.request({
@@ -49,10 +58,25 @@ async function purchase(token, srcCart, payment) {
             body: { token, items: srcCart, payment }
         });
         actions.setCart([]);
-        alert('Purchaed');
-        m.route.set('/home');
+        Modal.open(
+            m('div', [
+                m('h3', 'Purchase'),
+                m('hr'),
+                m('div', 'Your transaction has been completed.'),
+                m('hr'),
+                m('button', { onclick: () => { Modal.close(); m.route.set('/home'); } }, 'Close'),
+            ])
+        );
     } catch(e) {
-        alert(e.toString());
+        Modal.open(
+            m('div', [
+                m('h3', 'Error'),
+                m('hr'),
+                m('div', e.toString()),
+                m('hr'),
+                m('button', { onclick: Modal.close }, 'Close'),
+            ])
+        );
         console.log(e);
     }
 }

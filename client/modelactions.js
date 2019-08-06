@@ -1,4 +1,5 @@
 const m = require('mithril');
+const Modal = require('./modal');
 
 let model = {
     user: null
@@ -22,7 +23,15 @@ async function login(username, password) {
         };
         m.route.set(m.route.get(), null, { replace: false });
     } catch (e) {
-        alert('login failed');
+        Modal.open(
+            m('div', [
+                m('h3', 'Error'),
+                m('hr'),
+                m('div', 'Login failed.'),
+                m('hr'),
+                m('button', { onclick: Modal.close }, 'Close'),
+            ])
+        );
         console.log(e);
     }        
 }

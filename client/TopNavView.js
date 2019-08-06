@@ -1,10 +1,55 @@
 const m = require('mithril');
+const Modal = require('./modal');
 const actions = require('./modelactions');
 
+function LoginBox({ attrs }) {
+    let { username, password, submit } = attrs;
+
+    function doSubmit() {
+        Modal.close();
+        submit({ username, password });
+    }
+
+    function handleKeypress(ev) {
+        var code = (ev.keyCode ? ev.keyCode : ev.which);
+        if(code == 13) doSubmit();
+    }
+
+    function view({ attrs }) {
+        return m('div', [
+            m('h3', 'Login'),
+            m('hr'),
+            m('table',
+                m('tr',
+                    m('td', 'Username:'),
+                    m('td',
+                        m('input', { value: username, onchange: (ev) => username = ev.target.value, onkeypress: handleKeypress }),
+                    ),
+                ),
+                m('tr',
+                    m('td', 'Password:'),
+                    m('td',
+                        m('input', { value: password, onchange: (ev) => password = ev.target.value, onkeypress: handleKeypress, type: 'password'}),
+                    ),
+                ),
+            ),
+            m('hr'),
+            m('button', { onclick: doSubmit }, 'Login'),
+            m('button', { onclick: Modal.close }, 'Cancel'),
+        ]);
+    }
+
+    return { view };
+}
+
 function tryLogin() {
-    let username = prompt('Username (for demo, use: plato)');
-    let password = prompt('Password (for demo, use: plato2)');
-    actions.login(username, password);
+    Modal.open(m(LoginBox, { username: 'plato', password: 'plato2', submit: ({ username, password}) => actions.login(username, password) }));
+    //     m('h3', Login),
+    //     m('hr'),
+    //     m('div', 
+    // let username = prompt('Username (for demo, use: plato)');
+    // let password = prompt('Password (for demo, use: plato2)');
+    // actions.login(username, password);
 }
 
 function TopNavView({ attrs }) {

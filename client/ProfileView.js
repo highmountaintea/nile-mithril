@@ -2,6 +2,7 @@ const m = require('mithril');
 const dateformat = require('dateformat');
 const TopNavView = require('./TopNavView');
 const LeftNavView = require('./LeftNavView');
+const Modal = require('./modal');
 const actions = require('./modelactions');
 
 async function addBalance() {
@@ -18,7 +19,15 @@ async function addBalance() {
         });
         m.route.set(m.route.get(), null, { replace: false });
     } catch(e) {
-        alert('unable to add money');
+        Modal.open(
+            m('div', [
+                m('h3', 'Error'),
+                m('hr'),
+                m('div', 'Unable to add more money'),
+                m('hr'),
+                m('button', { onclick: Modal.close }, 'Close'),
+            ])
+        );
     }
 }
 
