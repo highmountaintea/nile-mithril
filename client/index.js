@@ -1,3 +1,4 @@
+require('regenerator-runtime/runtime');
 const m = require('mithril');
 const HomeView = require('./HomeView');
 const CategoryView = require('./CategoryView');

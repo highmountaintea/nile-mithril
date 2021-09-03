@@ -18,7 +18,7 @@ plugins.push(new webpack.DefinePlugin(envs));
 let app = ['./client/index.js'];
 let rules = [];
 if (babel) {
-  app.unshift('@babel/polyfill');
+  // app.unshift('@babel/polyfill');
   rules.push({
     test: /\.js$/,
     exclude: /node_modules/,
@@ -52,7 +52,7 @@ module.exports = {
     // proxy: {
     //   "/api": "http://localhost:3750"
     // },
-    contentBase: 'public',
+    static: 'public',
   },
   plugins: plugins,
   module: {
