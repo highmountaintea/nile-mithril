@@ -18,7 +18,7 @@ plugins.push(new webpack.DefinePlugin(envs));
 let app = ['./client/index.js'];
 let rules = [];
 if (babel) {
-  app.unshift('@babel/polyfill');
+  // app.unshift('@babel/polyfill');
   rules.push({
     test: /\.js$/,
     exclude: /node_modules/,
